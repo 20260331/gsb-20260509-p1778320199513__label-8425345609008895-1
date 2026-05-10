@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>C++ Web IDE</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <div class="hero-title">C++ Web IDE</div>
+          <div class="hero-subtitle">纯前端执行，无后端依赖。适合演示与练习基础语法与常用 STL。</div>
+          <div class="support-chip">C++98/03 · JSCPP 解释执行 · 预输入模式</div>
+        </div>
+        <div class="controls">
+          <span class="status-pill" id="status-pill" data-status="Ready">状态：Ready</span>
+          <button class="action-btn action-secondary" id="reset-btn" type="button">重置示例</button>
+          <button class="action-btn action-primary" id="run-btn" type="button">运行代码</button>
+        </div>
+      </header>
+
+      <main class="ide-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">代码编辑器</div>
+            <div class="panel-meta">仅支持单文件执行</div>
+          </div>
+          <div class="editor-shell" id="editor"></div>
+          <div class="footer-note">提示：自动本地保存 · 支持预输入 · 运行超时将自动终止。</div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-stack">
+            <div class="input-panel">
+              <div class="panel-header">
+                <div class="panel-title">输入数据</div>
+                <div class="panel-meta">多行输入按换行分隔</div>
+              </div>
+              <textarea
+                class="input-area"
+                id="input-area"
+                spellcheck="false"
+                aria-label="C++ 输入数据"
+                placeholder="例如：&#10;3 5&#10;10 20"
+              ></textarea>
+              <div class="input-hint">提示：运行时将以上内容作为标准输入。</div>
+            </div>
+
+            <div class="panel-divider" aria-hidden="true"></div>
+
+            <div class="panel-section-output">
+              <div class="panel-header">
+                <div class="panel-title">输出结果</div>
+                <div class="panel-meta">状态：<span id="output-status">Ready</span></div>
+              </div>
+              <div class="terminal-body" aria-live="polite">
+                <pre class="terminal-output" id="output"></pre>
+                <span class="terminal-placeholder" id="output-placeholder">
+                  等待运行。输出将显示在这里。
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
