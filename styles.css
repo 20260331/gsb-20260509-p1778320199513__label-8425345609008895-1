@@ -182,6 +182,12 @@ body {
   font-weight: 600;
 }
 
+.panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .panel-meta {
   font-size: 0.78rem;
   color: var(--color-muted);

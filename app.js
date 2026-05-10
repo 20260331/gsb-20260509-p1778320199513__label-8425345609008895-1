@@ -34,6 +34,7 @@ const statusPill = document.getElementById('status-pill')
 const outputStatus = document.getElementById('output-status')
 const runBtn = document.getElementById('run-btn')
 const resetBtn = document.getElementById('reset-btn')
+const copyBtn = document.getElementById('copy-btn')
 
 const loadStoredValue = (key, fallback) => {
   try {
@@ -77,6 +78,43 @@ const updateButtons = () => {
   runBtn.disabled = isRunning
   resetBtn.disabled = isRunning
   runBtn.textContent = isRunning ? '运行中...' : '运行代码'
+}
+
+const showCopySuccess = () => {
+  const originalText = copyBtn.textContent
+  copyBtn.textContent = '已复制!'
+  setTimeout(() => {
+    copyBtn.textContent = originalText
+  }, 1500)
+}
+
+const copyOutput = async () => {
+  if (!outputText) {
+    return
+  }
+  let success = false
+  try {
+    await navigator.clipboard.writeText(outputText)
+    success = true
+  } catch (err) {
+    const textArea = document.createElement('textarea')
+    textArea.value = outputText
+    textArea.style.position = 'fixed'
+    textArea.style.left = '-9999px'
+    document.body.appendChild(textArea)
+    textArea.select()
+    try {
+      success = document.execCommand('copy')
+    } catch (e) {
+      console.error('复制失败:', e)
+      success = false
+    } finally {
+      document.body.removeChild(textArea)
+    }
+  }
+  if (success) {
+    showCopySuccess()
+  }
 }
 
 const renderOutput = () => {
@@ -125,6 +163,7 @@ inputArea.addEventListener('input', (event) => {
 
 runBtn.addEventListener('click', startRun)
 resetBtn.addEventListener('click', resetAll)
+copyBtn.addEventListener('click', copyOutput)
 
 const editorTheme = EditorView.theme(
   {
