@@ -53,7 +53,11 @@
             <div class="panel-section-output">
               <div class="panel-header">
                 <div class="panel-title">输出结果</div>
-                <div class="panel-meta">状态：<span id="output-status">Ready</span></div>
+                <div class="panel-header-right">
+                  <span class="copy-success" id="copy-success" style="display: none;">已复制</span>
+                  <button class="action-btn action-secondary copy-btn" id="copy-btn" type="button">复制</button>
+                  <div class="panel-meta">状态：<span id="output-status">Ready</span></div>
+                </div>
               </div>
               <div class="terminal-body" aria-live="polite">
                 <pre class="terminal-output" id="output"></pre>
