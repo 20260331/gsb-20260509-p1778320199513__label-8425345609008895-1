@@ -265,6 +265,31 @@ body {
   top: 18px;
 }
 
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: rgba(134, 239, 172, 0.18);
+  color: #86efac;
+  border: 1px solid rgba(134, 239, 172, 0.4);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 .footer-note {
   font-size: 0.8rem;
   color: var(--color-muted);
