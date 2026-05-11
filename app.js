@@ -34,6 +34,8 @@ const statusPill = document.getElementById('status-pill')
 const outputStatus = document.getElementById('output-status')
 const runBtn = document.getElementById('run-btn')
 const resetBtn = document.getElementById('reset-btn')
+const copyBtn = document.getElementById('copy-btn')
+const copySuccess = document.getElementById('copy-success')
 
 const loadStoredValue = (key, fallback) => {
   try {
@@ -125,6 +127,35 @@ inputArea.addEventListener('input', (event) => {
 
 runBtn.addEventListener('click', startRun)
 resetBtn.addEventListener('click', resetAll)
+
+let copySuccessTimer = null
+
+const copyOutput = async () => {
+  if (!outputText) {
+    return
+  }
+
+  try {
+    await navigator.clipboard.writeText(outputText)
+
+    if (copySuccessTimer) {
+      clearTimeout(copySuccessTimer)
+    }
+
+    copySuccess.style.display = 'inline'
+    copySuccess.style.animation = 'none'
+    copySuccess.offsetHeight
+    copySuccess.style.animation = 'fadeInOut 2s ease'
+
+    copySuccessTimer = setTimeout(() => {
+      copySuccess.style.display = 'none'
+    }, 2000)
+  } catch {
+    // 忽略复制失败
+  }
+}
+
+copyBtn.addEventListener('click', copyOutput)
 
 const editorTheme = EditorView.theme(
   {
