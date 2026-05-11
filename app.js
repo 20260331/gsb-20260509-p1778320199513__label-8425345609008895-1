@@ -34,6 +34,7 @@ const statusPill = document.getElementById('status-pill')
 const outputStatus = document.getElementById('output-status')
 const runBtn = document.getElementById('run-btn')
 const resetBtn = document.getElementById('reset-btn')
+const copyBtn = document.getElementById('copy-btn')
 
 const loadStoredValue = (key, fallback) => {
   try {
@@ -76,6 +77,7 @@ const setStatus = (next) => {
 const updateButtons = () => {
   runBtn.disabled = isRunning
   resetBtn.disabled = isRunning
+  copyBtn.disabled = isRunning
   runBtn.textContent = isRunning ? '运行中...' : '运行代码'
 }
 
@@ -125,6 +127,39 @@ inputArea.addEventListener('input', (event) => {
 
 runBtn.addEventListener('click', startRun)
 resetBtn.addEventListener('click', resetAll)
+
+let toastEl = null
+let toastTimer = null
+
+const showToast = (message) => {
+  if (!toastEl) {
+    toastEl = document.createElement('div')
+    toastEl.className = 'toast'
+    document.body.appendChild(toastEl)
+  }
+  if (toastTimer) clearTimeout(toastTimer)
+  toastEl.textContent = message
+  toastEl.classList.add('show')
+  toastTimer = setTimeout(() => {
+    toastEl.classList.remove('show')
+  }, 1800)
+}
+
+const handleCopy = async () => {
+  if (!outputText) return
+  try {
+    await navigator.clipboard.writeText(outputText)
+    copyBtn.textContent = '已复制'
+    showToast('已复制到剪贴板')
+    setTimeout(() => {
+      copyBtn.textContent = '复制输出'
+    }, 1800)
+  } catch {
+    showToast('复制失败，请手动选择复制')
+  }
+}
+
+copyBtn.addEventListener('click', handleCopy)
 
 const editorTheme = EditorView.theme(
   {
