@@ -1,0 +1,5 @@
+services:
+  cpp-web-ide-html:
+    build: .
+    ports:
+      - "3000:80"
